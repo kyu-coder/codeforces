@@ -1,0 +1,44 @@
+----------------------------------------------------------------------------------------
+
+typedef pair<int, int> pairs;
+
+"the typedef declaration provides a way to declare an identifier as a type alias, to be
+used to replace a possibly complex type name"
+
+----------------------------------------------------------------------------------------
+
+for (auto const &x : s)
+
+https://stackoverflow.com/questions/17032267/c11-range-based-for-loop-efficiency-const-auto-i-versus-auto-i
+for(auto i : vec)
+	this creates a copy of each element of vec
+
+for(const auto &i : vec)
+	this makes sure that the values of vec are never modified (const)
+	and does not create an extra copy of each element of vec
+
+----------------------------------------------------------------------------------------
+
+struct PairCmp
+{
+    bool operator()(const pairs& lhs, const pairs& rhs) const
+    { 
+        return lhs.second < rhs.second; 
+    }
+};
+
+set<pairs, PairCmp> polyset;
+
+Doing this sorts the set based on the second element.
+
+"A struct in the C programming language (and many derivatives) is a composite data type
+delcaration that defines a physically grouped list of variables under one name in a block
+of memory, allowing the different variables to be accessed via a single pointer or by the
+struct declared name which returns the same address."
+
+
+https://stackoverflow.com/questions/4600295/what-is-the-meaning-of-operator-bool-const
+
+But this will remove all the *duplicate second value* pairs even if the first value are
+different. For example, only one of the (1, 2) (2, 2) will remain in the set.
+

@@ -1,91 +1,64 @@
 // https://codeforces.com/problemset/problem/1468/C
 
-#include <stdio.h>
 #include<bits/stdc++.h>
 using namespace std;
 
+typedef pair<int, int> pairs;
+
+bool sortbysec(const pairs &a, 
+              const pairs &b) 
+{ 
+    return (a.second < b.second); 
+} 
+
 int main()
 {
-	int q, spent[500001], i = 1, m = 1, max = 0;
+
+	int q;
+
+
+
+	int query;
+	int i_th_customer = 1, money_spent;
 	
+	set<pairs> monoset, polyset;
+
 	cin >> q;
 
 	while(q--)
 	{
-		int code; // 1 - customer, 2 - monocarp, 3 - polycarp
-		int amount;
-		cin >> code;
 
-		if (code == 1)
+		cin >> query;
+
+		if (query == 1)
 		{
-			cin >> amount;
-			spent[i] = amount;
-			i++;
+			cin >> money_spent;
+			pairs temp = make_pair(i_th_customer++, money_spent);
+			monoset.insert(temp);
+			polyset.insert(temp);
+			sort(polyset.begin(), polyset.end(), sortbysec);
+		}
 
-			if (max < amount)
-			{
-				max = amount;
-			}
+		else if (query == 2)
+		{
 			
 		}
-		else if (code == 2)
+
+		else // if (query == 3)
 		{
-			while(spent[m] == -1)
-			{
-				m++;
-			}
-			cout << m << " ";
-
-			if (spent[m] == max)
-			{
-				max = 0;
-				for(int k = m+1; k <= i; k++)
-				{
-					if (max < spent[k])
-					{
-						max = spent[k];
-					}
-				}
-			}
-
-			spent[m] = -1;
+			
 		}
-		else // if (code == 3)
-		{
-			for(int p = m; p < i; p++)
-			{
-				if (spent[p] == max)
-				{
-					max = 0;
-
-					
-					cout << p << " ";
-					spent[p] = -1;
-
-
-					for(int k = m; k < i; k++)
-					{
-						if(max < spent[k])
-						{
-							max = spent[k];
-						}
-					}
-
-					p = i+1; // break out of a for loop
-										
-				}
-			}
-		}
-		/*
-		for(int k = 1; k <= 4; k++)
-		{
-			cout << spent[k] << " ";
-		}
-		cout << "\n";
-		cout << "i : " << i << ", m : " << m << ", max : " << max << "\n";
-		*/
 	}
-	
+
+	for (auto const &x : polyset)
+	{
+		cout << x.first << ", " << x.second << "\n";
+	}
+	for (auto const &x : monoset)
+	{
+		cout << x.first << ", " << x.second << "\n";
+	}
+
 	
 }
 /*
