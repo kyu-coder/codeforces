@@ -42,3 +42,97 @@ https://stackoverflow.com/questions/4600295/what-is-the-meaning-of-operator-bool
 But this will remove all the *duplicate second value* pairs even if the first value are
 different. For example, only one of the (1, 2) (2, 2) will remain in the set.
 
+----------------------------------------------------------------------------------------
+
+struct comp
+{
+	template<typename T>
+	bool operator()(const T& l, const T& r) const
+	{
+		
+		if (l.second == r.second)
+			return l.first < r.first;
+ 
+		return l.second > r.second;
+	}
+};
+
+https://www.cplusplus.com/doc/oldtutorial/templates/
+"Function templates are special functions that can operate with generic types.
+This allows us to create a function template whose functionality can be adapted to
+more than one type or class without repeating the entire code for each type."
+
+I guess I'm not exactly sure what "generic" means here. Looking  at some examples might help.
+
+So basically, template enables us to create functions that can take as input
+many different types of values. For example,
+
+template <class T, class U>
+T GetMin (T a, U b) {
+  return (a<b?a:b);
+}
+
+allows us to compare integers, longs, or even characters.
+
+http://cpp.sh/4jay
+Running the below code:
+// function template II
+#include <iostream>
+using namespace std;
+
+template <class T>
+T GetMax (T a, T b) {
+  return (a>b?a:b);
+}
+
+int main () {
+  int i=5, j=6, k;
+  char l='l', m='m', n;
+  k=GetMax(i,j);
+  n=GetMax(l,m);
+  cout << k << endl;
+  cout << n << endl;
+  return 0;
+}
+
+outputs:
+6
+m
+
+I guess I didn't need to use template for berpizza.cpp since the input values are
+guaranteed to be integers but I can see why using template can be very useful.
+
+----------------------------------------------------------------------------------------
+
+pairs p1(3, 15);
+auto it = polyset.find(p1);
+
+cout << it-> first << ", " << it-> second << endl;
+
+https://stackoverflow.com/questions/3434256/use-the-auto-keyword-in-c-stl
+"The auto keyword is simply asking the compiler to deduce the type of the variable
+from the initialization."
+
+So I'm guessing (set).find() returns a pointer.
+
+https://www.cplusplus.com/reference/set/set/find/
+says:
+set::find returns an iterator to the element, if val is found, or set::end otherwise.
+
+https://www.cplusplus.com/reference/iterator/
+iterator definitions:
+An iterator is any object that, pointing to some element in a range of elements
+(such as an array or a container), has the ability to iterate through the elements
+of that range using a set of operators.
+
+And then it says the most obvious form of iterator is a pointer. But other kinds of
+iterators are possible.
+
+----------------------------------------------------------------------------------------
+
+What's a container?
+
+https://www.cplusplus.com/reference/stl/
+A container is a holder object that stores a collection of other objects.
+They are implemented as class templates, which allows a great flexibility in the types
+supported as elements.
